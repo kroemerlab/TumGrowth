@@ -236,7 +236,11 @@ compModLG<-function(lgmat,bfco=0.1,adjust=TRUE){
 #####################################################################
 .makeOnepw<-function(x,K){
   
-  jtab2=doBy:::LSmeans(x,K=K,adjust=TRUE)[[1]]
+  if(packageVersion("doBy") >= '4.6.0'){
+    jtab2 = doBy::linest(x,L=K,adjust=TRUE)[[1]]
+  }else{
+    jtab2=doBy:::LSmeans(x,K=K,adjust=TRUE)[[1]]
+  }
   upc=jtab2[,"estimate"]+jtab2[,"se"]*qt(0.975,df=jtab2[,"df"])
   loc=jtab2[,"estimate"]-jtab2[,"se"]*qt(0.975,df=jtab2[,"df"])
   
