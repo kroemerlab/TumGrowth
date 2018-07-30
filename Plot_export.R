@@ -16,6 +16,7 @@ exportTC<-function(h1,dogrps=TRUE,type='tc'){
   
   par(xpd=F)
   re=plot(range(xtk),range(ytk),pch=16,cex=0,axes=F,ylim=range(ytk),xlim=range(xtk),xlab="Time",ylab=h1$Title)
+  idf=h1$df # Now initialized outside if statement
   
   if(dogrps)  graphics:::text(mean(xtk)*.99,mean(ytk[-1])*.98,"Gst")
   axis(1,at=xtk,pos=ytk[1]-range(ytk)*.02,lwd=2,tick=F)
@@ -46,7 +47,6 @@ exportTC<-function(h1,dogrps=TRUE,type='tc'){
   }
   
   if(any(c('tc')%in%type)){
-    idf=h1$df
   for(igrp in unique(idf$Grp)){
     if(dogrps)  graphics:::text(mean(xtk)*.95,mean(ytk[-1])*.78,"Gst")
     cols=idf$color[idf$Grp==igrp][1]
