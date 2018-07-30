@@ -793,7 +793,7 @@ shinyServer(function(input, output, session) {
       par(mar=c(3.4,4,1,.1),lwd=2,lend=0,cex=input$tccex,cex.axis=input$tccex,cex.lab=input$tccex)
       cdat=dat()
       lgdata=getLGmat(cdat,resp=input$response,lgrps=input$vars,gcols=colGrps()[as.character(input$vars)],trans=input$trans)
-      h1=plotLineC(lgdata,trans=input$trans,type=input$tcfplottyp,
+      h1=plotLineC(lgdata,type=input$tcfplottyp,
                    force2zero=input$showPanel2,defzero=as.numeric(input$tcdef),
                    miny=as.numeric(input$tcminy),maxy=as.numeric(input$tcmaxy))[-1]
       exportTC(h1,dogrps=T,type=input$tcfplottyp)
