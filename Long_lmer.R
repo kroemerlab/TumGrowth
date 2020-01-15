@@ -241,11 +241,14 @@ compModLG<-function(lgmat,bfco=0.1,adjust=TRUE){
   }else{
     jtab2=doBy:::LSmeans(x,K=K,adjust=TRUE)[[1]]
   }
-  upc=jtab2[,"estimate"]+jtab2[,"se"]*qt(0.975,df=jtab2[,"df"])
-  loc=jtab2[,"estimate"]-jtab2[,"se"]*qt(0.975,df=jtab2[,"df"])
+  selb = grep('se|std.error',colnames(jtab2),value=T)
+  tlb =  grep('statistic|t.stat',colnames(jtab2),value=T)
+  
+  upc=jtab2[,"estimate"]+jtab2[,selb]*qt(0.975,df=jtab2[,"df"])
+  loc=jtab2[,"estimate"]-jtab2[,selb]*qt(0.975,df=jtab2[,"df"])
   
   jtab=data.frame(do.call("rbind",strsplit(rownames(jtab2)," - ")),
-                  cbind(jtab2[,c("t.stat","se","df","p.value","estimate"),drop=FALSE],loc,upc),stringsAsFactors=F)
+                  cbind(jtab2[,c(tlb,selb,"df","p.value","estimate"),drop=FALSE],loc,upc),stringsAsFactors=F)
   names(jtab)=c("Largest","Smallest","Tstat","SE","Df","Pvalue","Contrast","Lower","Upper")
   for(i in which(jtab$Contrast<0)){
     jtab[i,c("Largest","Smallest")]=jtab[i,c("Smallest","Largest")]
